@@ -1,6 +1,8 @@
 # vaulteD: pre-commit hooks.
 # Every `rev` is pinned to a verified released tag (verified against the
 # upstream repository on 2026-10-11). Never bump to a floating ref.
+# Both hook stages are installed by a bare `pre-commit install`.
+default_install_hook_types: [pre-commit, commit-msg]
 repos:
   # ---- secrets scanning: pre-commit AND the Makefile `check` target ----
   - repo: https://github.com/gitleaks/gitleaks
