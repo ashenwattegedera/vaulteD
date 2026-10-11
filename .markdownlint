@@ -1,0 +1,9 @@
+# vaulteD: markdownlint configuration. Non-noisy by intent.
+# MD013 not enforced: docs are read as source here; wrapping is optional.
+{
+  "MD013": false,
+  "MD024": { "siblings_only": true },
+  "MD033": false,
+  "MD041": false,
+  "line_length": 120
+}

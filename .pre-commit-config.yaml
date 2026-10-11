@@ -1,0 +1,67 @@
+# vaulteD: pre-commit hooks.
+# Every `rev` is pinned to a verified released tag (verified against the
+# upstream repository on 2026-10-11). Never bump to a floating ref.
+repos:
+  # ---- secrets scanning: pre-commit AND the Makefile `check` target ----
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ["--maxkb=1024"]
+        exclude: ^docs/
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+
+  # upstream shfmt does not ship a hook repo; scop/pre-commit-shfmt is the
+  # maintained wrapper (prebuilt upstream executable).
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.14.1-1
+    hooks:
+      - id: shfmt
+        args: ["-i", "2", "-ci", "-sr"]
+
+  # yamllint: no maintained pip/github pre-commit mirror ships a hook;
+  # the conda mirror requires conda. Use the locally installed binary
+  # (brew install yamllint) with this repo's .yamllint config.
+  - repo: local
+    hooks:
+      - id: yamllint
+        name: yamllint
+        always_run: false
+        entry: yamllint --config-file .yamllint
+        language: system
+        files: \.ya?ml$
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.49.1
+    hooks:
+      - id: markdownlint
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args:
+          - feat
+          - fix
+          - docs
+          - chore
+          - ci
+          - refactor
+          - test
+          - build
+          - perf
+          - revert
