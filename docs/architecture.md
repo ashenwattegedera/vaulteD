@@ -37,7 +37,7 @@ flowchart LR
   jewels: anyone with host access owns the vault data. Backups are encrypted
   client-side by restic before leaving the host.
 - Account-level security (2FA, recovery codes) is documented for end users in
-  [docs/getting-started/using-vaulted.md](docs/getting-started/using-vaulted.md).
+  [docs/getting-started/using-vaulted.md](getting-started/using-vaulted.md).
 
 ## Open decisions
 
@@ -48,5 +48,5 @@ flowchart LR
     same third-party-trust model as B2.
   - **Second machine over Tailscale**: no external party; but both copies can
     be lost if the tailnet/host is compromised or the machines share a fate.
-- Record decisions as ADRs in [docs/adr/](docs/adr/); see
-  [docs/adr/0000-template.md](docs/adr/0000-template.md).
+- Record decisions as ADRs in [docs/adr/](adr/); see
+  [docs/adr/0000-template.md](adr/0000-template.md).

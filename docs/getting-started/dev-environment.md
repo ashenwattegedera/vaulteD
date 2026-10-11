@@ -68,5 +68,5 @@ planned; no workflows exist yet).
 
 - Never weaken `.gitleaks.toml` allowlists to make CI greener.
 - Hooks are pinned by tag; bumping pre-commit `rev`s requires verifying the
-  tag exists upstream (see [AGENTS.md](/AGENTS.md)).
-- Ask questions before guessing; see [CONTRIBUTING.md](/CONTRIBUTING.md).
+  tag exists upstream (see [AGENTS.md](../../AGENTS.md)).
+- Ask questions before guessing; see [CONTRIBUTING.md](../../CONTRIBUTING.md).
