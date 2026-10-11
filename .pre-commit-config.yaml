@@ -1,6 +1,8 @@
 # vaulteD: pre-commit hooks.
 # Every `rev` is pinned to a verified released tag (verified against the
 # upstream repository on 2026-10-11). Never bump to a floating ref.
+# Both hook stages are installed by a bare `pre-commit install`.
+default_install_hook_types: [pre-commit, commit-msg]
 repos:
   # ---- secrets scanning: pre-commit AND the Makefile `check` target ----
   - repo: https://github.com/gitleaks/gitleaks
@@ -20,7 +22,7 @@ repos:
       - id: check-yaml
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.9.0.6
+    rev: v0.11.0.1-1
     hooks:
       - id: shellcheck
 
@@ -32,17 +34,11 @@ repos:
       - id: shfmt
         args: ["-i", "2", "-ci", "-sr"]
 
-  # yamllint: no maintained pip/github pre-commit mirror ships a hook;
-  # the conda mirror requires conda. Use the locally installed binary
-  # (brew install yamllint) with this repo's .yamllint config.
-  - repo: local
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.38.0
     hooks:
       - id: yamllint
-        name: yamllint
-        always_run: false
-        entry: yamllint --config-file .yamllint
-        language: system
-        files: \.ya?ml$
+        args: ["--config-file", ".yamllint"]
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.49.1

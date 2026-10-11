@@ -4,8 +4,12 @@
 
 Please **do not** report vulnerabilities through a public GitHub issue.
 
-Contact: **[PLACEHOLDER — maintainer to fill: preferred contact method and
-response address, e.g. a security@ mailbox or GitHub security advisory]**
+Report it privately via GitHub's flow on this repository's
+**Security tab → "Report a vulnerability"** (private vulnerability
+reporting, [GitHub docs](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability)).
+
+The maintainer sets up and maintains this channel in repo settings
+(Settings → Code security & analysis → Private vulnerability reporting).
 
 Include in your report:
 

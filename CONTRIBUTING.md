@@ -59,4 +59,6 @@ lands in a later issue; until then, do not tag manually.
 ## Security
 
 Found a vulnerability? Read [SECURITY.md](SECURITY.md) before publishing
-anything.
+anything — reports go through GitHub's private "Report a vulnerability"
+flow, which the maintainer must enable in repo settings
+(Settings → Code security & analysis → Private vulnerability reporting).
