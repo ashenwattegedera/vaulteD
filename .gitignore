@@ -1,0 +1,68 @@
+# Environment files: .env holds runtime configuration (secrets, tokens).
+# Everything is blocked except .env.example, the committed template.
+.env
+.env.*
+!.env.example
+
+# Key material: private keys, certificates, age encryption keys.
+*.key
+*.pem
+*.age
+
+# Restic: backups must never be committed (passwords, repository config, snapshots).
+restic-*.env
+restpassword*
+restic-repo*
+*.snapshot
+*.restic
+
+# Tailscale: auth keys grant node-join access to the tailnet.
+tskey-auth-*
+*.tskey
+tailscale-keys*
+
+# Kubernetes: kubeconfigs grant cluster admin access.
+kubeconfig*
+.kube/
+
+# Secrets directory: any file under secrets/ is assumed to be sensitive.
+secrets/
+
+# Vaultwarden data: the SQLite database, attachments and RSA signing keys
+# contain all vault secrets.
+data/
+*.sqlite3
+*.sqlite3-journal
+db.sqlite3*
+rsa_key*
+attachments/
+
+# Backup archives and working directories.
+backups/
+*.tar.gz
+*.tar
+*.backup
+
+# Terraform / OpenTofu: state files may contain sensitive resource attributes.
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# Python: virtualenvs and cache artifacts (used by pre-commit tooling).
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Node: dependencies and cache (tooling such as markdownlint may install these).
+node_modules/
+.npm/
+
+# OS and editor noise.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

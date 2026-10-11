@@ -1,0 +1,50 @@
+# Gitleaks configuration for vaulteD.
+# Extends the default ruleset; allowlists are kept deliberately narrow and
+# every entry is commented with the reason it exists.
+
+[extend]
+# Include all global default rules (generic API keys, AWS, private keys, ...).
+useDefault = true
+
+# ---------------------------------------------------------------- rules ----
+
+# Tailscale auth keys: generate-and-join credentials for the tailnet.
+# Format: tskey-auth-<keyID>-<alphanumeric secret>. Leaked keys let a node
+# join the private network, so they are always treated as secrets.
+[[rules]]
+id = "tailscale-auth-key"
+description = "Tailscale auth key (tskey-auth-...)"
+regex = '''tskey-auth-[A-Za-z0-9]+-[A-Za-z0-9]{20,}'''
+keywords = ["tskey-auth"]
+
+# Argon2id PHC strings: Vaultwarden's hashed admin tokens use this format.
+# A leaked hash allows brute-forcing the admin token, so treat it as secret.
+[[rules]]
+id = "argon2-phc-hash"
+description = "Argon2 PHC hash (potential Vaultwarden admin token)"
+# @salt ~8+ chars, then $ followed by binary+hash (minimum-length body).
+regex = '''\$argon2[id]{1,2}\$v=[0-9]{1,3}\$m=[0-9]{1,10},t=[0-9]{1,3},p=[0-9]{1,3}\$[A-Za-z0-9+/_-]{12,}\$[A-Za-z0-9+/_-]{24,}'''
+keywords = ["argon2"]
+
+# ------------------------------------------------------------ allowlist ----
+# NOTE: entries are intentionally narrow; never allowlist whole directories
+# that could hold real configuration.
+
+[[allowlists]]
+description = "Example/template files only: their contents are placeholder"
+paths = ['''(^|/)\.env\.example$''']
+# Reason: this file exists to show which variables exist; its values are
+# documented placeholders such as CHANGE_ME, never real configuration.
+
+[[allowlists]]
+description = "Obviously fake placeholder strings used in docs and tests"
+regexes = [
+  # Used as demonstrative dummy values in docs and fixtures; matched on the
+  # known placeholder fragments so real secrets cannot be smuggled in.
+  '''(?:PLACEHOLDER|REPLACE_ME|CHANGE_ME|EXAMPLE_ONLY|DUMMY)''',
+  # All-zero example identifiers that can never be a real token.
+  '''((?:0000-?){4}){1}''',
+]
+# Reason: documentation and tests must contain *some* example-shaped strings;
+# this rule keeps only the globally-obviously-fake forms allowed so that a
+# genuine-looking token is still caught.
