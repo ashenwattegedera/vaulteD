@@ -1,0 +1,14 @@
+# vaulteD: yamllint configuration. Non-noisy by intent.
+extends: default
+
+rules:
+  line-length:
+    max: 100
+    level: warning
+  document-start: disable
+  truthy: disable
+  comments:
+    min-spaces-from-content: 1
+  indentation:
+    spaces: 2
+    indent-sequences: consistent
